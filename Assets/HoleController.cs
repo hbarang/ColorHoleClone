@@ -8,7 +8,9 @@ public class HoleController : MonoBehaviour
     public float maxVerticalSpeed;
     public float speedMultiplier;
 
-    // Update is called once per frame
+    private void Start() {
+        GameManager.instance.StageChangedEvent += StageChanged;
+    }
     void Update()
     {
         MoveByArrowKeys();
@@ -22,5 +24,12 @@ public class HoleController : MonoBehaviour
 
     }
 
+    void StageChanged(int stage){
+        Debug.Log(stage);
+    }
+
+    private void OnDestroy() {
+        GameManager.instance.StageChangedEvent -= StageChanged;
+    }
 
 }
