@@ -242,6 +242,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   levels:
   - {fileID: 2894999203584711126, guid: 5ff3deb04911bb749a214dbbd9aceaac, type: 3}
+  - {fileID: 2894999203584711126, guid: 740ef2533d2da954181a70e98b98750b, type: 3}
 --- !u!4 &872725697
 Transform:
   m_ObjectHideFlags: 0
@@ -256,12 +257,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &887889098 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2894999203671564322, guid: 5ff3deb04911bb749a214dbbd9aceaac,
-    type: 3}
-  m_PrefabInstance: {fileID: 2894999202785262824}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &963194225
 GameObject:
   m_ObjectHideFlags: 0
@@ -547,21 +542,21 @@ PrefabInstance:
         type: 3}
       propertyPath: plane
       value: 
-      objectReference: {fileID: 887889098}
+      objectReference: {fileID: 0}
     - target: {fileID: 9187031316394156612, guid: 5ff3deb04911bb749a214dbbd9aceaac,
         type: 3}
       propertyPath: plane
       value: 
-      objectReference: {fileID: 887889098}
+      objectReference: {fileID: 0}
     - target: {fileID: 9187031317270153879, guid: 5ff3deb04911bb749a214dbbd9aceaac,
         type: 3}
       propertyPath: plane
       value: 
-      objectReference: {fileID: 887889098}
+      objectReference: {fileID: 0}
     - target: {fileID: 9187031317356584404, guid: 5ff3deb04911bb749a214dbbd9aceaac,
         type: 3}
       propertyPath: plane
       value: 
-      objectReference: {fileID: 887889098}
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5ff3deb04911bb749a214dbbd9aceaac, type: 3}
