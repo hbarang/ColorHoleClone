@@ -42,14 +42,17 @@ public class CameraController : MonoBehaviour
         {
             transform.position = Vector3.Lerp(transform.position, objectivePosition, 1f / 0.6f * Time.deltaTime);
         }
-        else{
+        else
+        {
             stageChanging = false;
         }
     }
-    void GameOver(){
+    void GameOver()
+    {
         transform.position = originalPosition;
     }
-    void ChangeLevel(int level){
+    void ChangeLevel(int level)
+    {
         GameOver();
     }
 

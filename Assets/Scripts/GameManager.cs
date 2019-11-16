@@ -102,16 +102,18 @@ public class GameManager : MonoBehaviour
     {
         Stage = 1;
         GameOver = false;
-        Destroy(GameObject.FindGameObjectWithTag("Level"));
-        Instantiate(levels[Level-1], Vector3.zero, Quaternion.identity);
+        Destroy(GameObject.FindGameObjectWithTag(Tags.Level));
+        Instantiate(levels[Level - 1], Vector3.zero, Quaternion.identity);
     }
-    void ChangeLevel(int level){
-        Destroy(GameObject.FindGameObjectWithTag("Level"));
-        if(levels.Length < Level){
+    void ChangeLevel(int level)
+    {
+        Destroy(GameObject.FindGameObjectWithTag(Tags.Level));
+        if (levels.Length < Level)
+        {
             Debug.Log("This was the last level");
             return;
         }
-        Instantiate(levels[Level-1], Vector3.zero, Quaternion.identity);
+        Instantiate(levels[Level - 1], Vector3.zero, Quaternion.identity);
     }
 
 

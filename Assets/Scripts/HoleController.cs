@@ -7,7 +7,7 @@ public class HoleController : MonoBehaviour
     public float maxHorizontalSpeed;
     public float maxVerticalSpeed;
     public float speedMultiplier;
-    private bool stageChanging = false;
+    public bool stageChanging = false;
     private bool horizontalStageChanging = false;
     int currentStage = 1;
 
