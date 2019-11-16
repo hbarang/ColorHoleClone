@@ -11,16 +11,23 @@ public class HoleController : MonoBehaviour
     private bool horizontalStageChaning = false;
     int currentStage = 1;
 
+    private Vector3 originalPosition;
+    private float originalVerticalMovementLimiter;
     public float verticalMovementLimiter;
     public float horizontalMovementLimiter;
     public delegate void OnVerticalStageChange();
     public event OnVerticalStageChange VerticalStageChangeEvent;
 
 
-    
+
     private void Start()
     {
         GameManager.instance.StageChangedEvent += StageChanged;
+        GameManager.instance.LevelChangedEvent += LevelChanged;
+        GameManager.instance.GameOverEvent += GameOver;
+
+        originalVerticalMovementLimiter = verticalMovementLimiter;
+        originalPosition = transform.position;
     }
     void Update()
     {
@@ -30,6 +37,7 @@ public class HoleController : MonoBehaviour
         }
         else
         {
+            GetComponent<Collider>().enabled = false;            
             if (horizontalStageChaning)
             {
                 MoveHorizontally();
@@ -47,29 +55,45 @@ public class HoleController : MonoBehaviour
         float moveByXAxis = Input.GetAxis("Horizontal") * speedMultiplier * Time.deltaTime;
         float moveByZAxis = Input.GetAxis("Vertical") * speedMultiplier * Time.deltaTime;
         transform.Translate(moveByXAxis > maxHorizontalSpeed ? maxHorizontalSpeed : moveByXAxis, 0, moveByZAxis > maxVerticalSpeed ? maxVerticalSpeed : moveByZAxis);
-        if(Mathf.Abs(transform.position.x) > horizontalMovementLimiter){
-            transform.position = new Vector3(transform.position.x < 0 ? (horizontalMovementLimiter*-1f) : horizontalMovementLimiter, transform.position.y, transform.position.z);
+        if (Mathf.Abs(transform.position.x) > horizontalMovementLimiter)
+        {
+            transform.position = new Vector3(transform.position.x < 0 ? (horizontalMovementLimiter * -1f) : horizontalMovementLimiter, transform.position.y, transform.position.z);
         }
-        if(transform.position.z < verticalMovementLimiter){
+        if (transform.position.z < verticalMovementLimiter)
+        {
             transform.position = new Vector3(transform.position.x, transform.position.y, verticalMovementLimiter);
         }
-        if(transform.position.z > verticalMovementLimiter + 9){
+        if (transform.position.z > verticalMovementLimiter + 9)
+        {
             transform.position = new Vector3(transform.position.x, transform.position.y, verticalMovementLimiter + 9);
         }
     }
 
     void StageChanged(int stage)
     {
-        Debug.Log(stage);
-        stageChanging = true;
-        horizontalStageChaning = true;
-        currentStage = stage;
-        verticalMovementLimiter += (stage-1)*20;
+        if (stage != 1)
+        {
+            stageChanging = true;
+            horizontalStageChaning = true;
+            currentStage = stage;
+            verticalMovementLimiter += 20;
+        }
+    }
+    void LevelChanged(int level)
+    {
+
     }
 
+    void GameOver()
+    {
+        verticalMovementLimiter = originalVerticalMovementLimiter;
+        transform.position = originalPosition;
+    }
     private void OnDestroy()
     {
         GameManager.instance.StageChangedEvent -= StageChanged;
+        GameManager.instance.LevelChangedEvent -= LevelChanged;
+        GameManager.instance.GameOverEvent -= GameOver;
     }
 
     void MoveHorizontally()
@@ -96,6 +120,7 @@ public class HoleController : MonoBehaviour
         else
         {
             stageChanging = false;
+            GetComponent<Collider>().enabled = true;
         }
     }
 

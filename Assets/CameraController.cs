@@ -7,12 +7,14 @@ public class CameraController : MonoBehaviour
     public GameObject Hole;
     int stage;
     bool stageChanging = false;
+    Vector3 originalPosition;
     // Start is called before the first frame update
     void Start()
     {
-
+        originalPosition = transform.position;
         Hole.GetComponent<HoleController>().VerticalStageChangeEvent += ChangeStageState;
         GameManager.instance.StageChangedEvent += StageCounter;
+        GameManager.instance.GameOverEvent += GameOver;
     }
 
     // Update is called once per frame
@@ -42,5 +44,8 @@ public class CameraController : MonoBehaviour
         else{
             stageChanging = false;
         }
+    }
+    void GameOver(){
+        transform.position = originalPosition;
     }
 }

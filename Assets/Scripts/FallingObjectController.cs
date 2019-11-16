@@ -21,7 +21,6 @@ public class FallingObjectController : MonoBehaviour
     {
         if (other.gameObject.tag == "Hole")
         {
-            Debug.Log("triggered");
             Physics.IgnoreCollision(transform.parent.GetComponent<Collider>(), GetComponent<Collider>());
             RotateThroughHole(other.transform);
             StartCoroutine(DestoryAfterAnimation());
@@ -68,9 +67,15 @@ public class FallingObjectController : MonoBehaviour
 
     IEnumerator DestoryAfterAnimation()
     {
-
         yield return new WaitForSeconds(1);
-        stageGameObject.GetComponent<StageController>().ObjectiveCount -= 1;
-        Destroy(this.gameObject);
+        if (cubeColor == new Color(1, 1, 1, 0))
+        {
+            stageGameObject.GetComponent<StageController>().ObjectiveCount -= 1;
+            Destroy(this.gameObject);
+        }
+        else{
+            GameManager.instance.GameOver = true;
+        }
+
     }
 }

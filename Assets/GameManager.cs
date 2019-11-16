@@ -7,7 +7,22 @@ public class GameManager : MonoBehaviour
 
     public static GameManager instance;
 
-    public bool gameOver;
+    private bool _gameOver;
+    public bool GameOver
+    {
+        get
+        {
+            return _gameOver;
+        }
+        set
+        {
+            _gameOver = value;
+            if (_gameOver == true)
+            {
+                GameOverEvent();
+            }
+        }
+    }
     private int _level;
     public int Level
     {
@@ -18,7 +33,10 @@ public class GameManager : MonoBehaviour
         set
         {
             _level = value;
-            LevelChangedEvent(_level);
+            if (LevelChangedEvent != null)
+            {
+                LevelChangedEvent(_level);
+            }
         }
     }
     private int _stage;
@@ -34,11 +52,15 @@ public class GameManager : MonoBehaviour
             if (value == 4)
             {
                 Level += 1;
+                _stage = 1;
             }
             else
             {
                 _stage = value;
-                StageChangedEvent(_stage);
+                if (StageChangedEvent != null)
+                {
+                    StageChangedEvent(_stage);
+                }
             }
 
         }
@@ -49,6 +71,10 @@ public class GameManager : MonoBehaviour
 
     public delegate void OnLevelChange(int level);
     public event OnLevelChange LevelChangedEvent;
+
+    public delegate void OnGameOver();
+    public event OnGameOver GameOverEvent;
+    public GameObject[] levels;
 
     void Awake()
     {
@@ -61,11 +87,32 @@ public class GameManager : MonoBehaviour
             Destroy(instance);
         }
 
-        gameOver = false;
+        _gameOver = false;
         _level = 1;
         _stage = 1;
     }
 
+    private void Start()
+    {
+        GameOverEvent += ResetStage;
+        LevelChangedEvent += ChangeLevel;
+    }
+
+    void ResetStage()
+    {
+        Stage = 1;
+        GameOver = false;
+        Destroy(GameObject.FindGameObjectWithTag("Level"));
+        Instantiate(levels[Level-1], Vector3.zero, Quaternion.identity);
+    }
+    void ChangeLevel(int level){
+        Destroy(GameObject.FindGameObjectWithTag("Level"));
+        if(levels.Length < Level){
+            Debug.Log("This was the last level");
+            return;
+        }
+        Instantiate(levels[Level-1], Vector3.zero, Quaternion.identity);
+    }
 
 
 }
