@@ -15,6 +15,7 @@ public class CameraController : MonoBehaviour
         Hole.GetComponent<HoleController>().VerticalStageChangeEvent += ChangeStageState;
         GameManager.instance.StageChangedEvent += StageCounter;
         GameManager.instance.GameOverEvent += GameOver;
+        GameManager.instance.LevelChangedEvent += ChangeLevel;
     }
 
     // Update is called once per frame
@@ -48,4 +49,8 @@ public class CameraController : MonoBehaviour
     void GameOver(){
         transform.position = originalPosition;
     }
+    void ChangeLevel(int level){
+        GameOver();
+    }
+
 }

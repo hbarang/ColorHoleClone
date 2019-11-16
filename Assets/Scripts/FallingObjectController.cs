@@ -4,10 +4,9 @@ using UnityEngine;
 
 public class FallingObjectController : MonoBehaviour
 {
-    public GameObject plane;
     Animator anim;
     public Color cubeColor;
-
+    public bool isObjective;
     private GameObject stageGameObject;
     private void Start()
     {
@@ -31,13 +30,17 @@ public class FallingObjectController : MonoBehaviour
     private void RotateThroughHole(Transform holeTransform)
     {
         Vector2 differenceVector = new Vector2(holeTransform.position.x - transform.position.x, holeTransform.position.z - transform.position.z);
-        if (Mathf.Abs(differenceVector.x) > Mathf.Abs(differenceVector.y))
+        if (anim != null)
         {
-            RotateZ(differenceVector.x);
-        }
-        else
-        {
-            RotateY(differenceVector.y);
+
+            if (Mathf.Abs(differenceVector.x) > Mathf.Abs(differenceVector.y))
+            {
+                RotateZ(differenceVector.x);
+            }
+            else
+            {
+                RotateY(differenceVector.y);
+            }
         }
     }
 
@@ -70,10 +73,14 @@ public class FallingObjectController : MonoBehaviour
         yield return new WaitForSeconds(1);
         if (cubeColor == new Color(1, 1, 1, 0))
         {
-            stageGameObject.GetComponent<StageController>().ObjectiveCount -= 1;
+            if (isObjective)
+            {
+                stageGameObject.GetComponent<StageController>().ObjectiveCount -= 1;
+            }
             Destroy(this.gameObject);
         }
-        else{
+        else
+        {
             GameManager.instance.GameOver = true;
         }
 

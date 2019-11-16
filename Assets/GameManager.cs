@@ -49,7 +49,7 @@ public class GameManager : MonoBehaviour
         }
         set
         {
-            if (value == 4)
+            if (value == 3)
             {
                 Level += 1;
                 _stage = 1;

@@ -8,7 +8,7 @@ public class HoleController : MonoBehaviour
     public float maxVerticalSpeed;
     public float speedMultiplier;
     private bool stageChanging = false;
-    private bool horizontalStageChaning = false;
+    private bool horizontalStageChanging = false;
     int currentStage = 1;
 
     private Vector3 originalPosition;
@@ -37,8 +37,8 @@ public class HoleController : MonoBehaviour
         }
         else
         {
-            GetComponent<Collider>().enabled = false;            
-            if (horizontalStageChaning)
+            GetComponent<Collider>().enabled = false;
+            if (horizontalStageChanging)
             {
                 MoveHorizontally();
             }
@@ -74,14 +74,15 @@ public class HoleController : MonoBehaviour
         if (stage != 1)
         {
             stageChanging = true;
-            horizontalStageChaning = true;
+            horizontalStageChanging = true;
             currentStage = stage;
             verticalMovementLimiter += 20;
         }
     }
     void LevelChanged(int level)
     {
-
+        verticalMovementLimiter = originalVerticalMovementLimiter;
+        transform.position = originalPosition;
     }
 
     void GameOver()
@@ -105,7 +106,7 @@ public class HoleController : MonoBehaviour
         }
         else
         {
-            horizontalStageChaning = false;
+            horizontalStageChanging = false;
             VerticalStageChangeEvent();
         }
 
@@ -113,6 +114,7 @@ public class HoleController : MonoBehaviour
     void MoveVertically(int stage)
     {
         Vector3 objectivePosition = new Vector3(transform.position.x, transform.position.y, (-4 + (stage - 1) * 20));
+
         if (Mathf.Abs(transform.position.z - objectivePosition.z) > 0.05f)
         {
             transform.position = Vector3.Lerp(transform.position, objectivePosition, 1f / 1.5f * Time.deltaTime);
