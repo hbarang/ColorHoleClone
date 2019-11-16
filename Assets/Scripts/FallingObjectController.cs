@@ -22,7 +22,7 @@ public class FallingObjectController : MonoBehaviour
         if (other.gameObject.tag == "Hole")
         {
             Debug.Log("triggered");
-            Physics.IgnoreCollision(plane.GetComponent<Collider>(), GetComponent<Collider>());
+            Physics.IgnoreCollision(transform.parent.GetComponent<Collider>(), GetComponent<Collider>());
             RotateThroughHole(other.transform);
             StartCoroutine(DestoryAfterAnimation());
         }

@@ -34,9 +34,5 @@ public class StageController : MonoBehaviour
 
     public delegate void OnObjectiveCountChange();
     public event OnObjectiveCountChange ObjectiveCountChangeEvent;
-    // Update is called once per frame
-    void Update()
-    {
 
-    }
 }
