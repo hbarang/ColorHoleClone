@@ -6,6 +6,8 @@ TagManager:
   tags:
   - Hole
   - Level
+  - FakePlane
+  - ObjectKiller
   layers:
   - Default
   - TransparentFX
@@ -15,9 +17,9 @@ TagManager:
   - UI
   - 
   - 
-  - Layer1
-  - Layer2
-  - 
+  - ObjectOnPlane
+  - ObjectInHole
+  - Hole
   - 
   - 
   - 

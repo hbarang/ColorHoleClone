@@ -4,85 +4,38 @@ using UnityEngine;
 
 public class FallingObjectController : MonoBehaviour
 {
-    Animator anim;
     public Color cubeColor;
     public bool isObjective;
     private GameObject stageGameObject;
     private void Start()
     {
-        anim = GetComponent<Animator>();
         var cubeRenderer = this.GetComponent<Renderer>();
         cubeRenderer.material.SetColor("_Color", cubeColor);
 
         stageGameObject = transform.parent.gameObject;
     }
-    private void OnTriggerEnter(Collider other)
+    private void Update()
     {
-        if (other.gameObject.tag == "Hole")
-        {
-            Physics.IgnoreCollision(transform.parent.GetComponent<Collider>(), GetComponent<Collider>());
-            RotateThroughHole(other.transform);
-            StartCoroutine(DestoryAfterAnimation());
-        }
+        CheckInTheHole();
     }
-
-
-    private void RotateThroughHole(Transform holeTransform)
+    void CheckInTheHole()
     {
-        Vector2 differenceVector = new Vector2(holeTransform.position.x - transform.position.x, holeTransform.position.z - transform.position.z);
-        if (anim != null)
+        if (transform.position.y < -1)
         {
-
-            if (Mathf.Abs(differenceVector.x) > Mathf.Abs(differenceVector.y))
+            if (cubeColor == new Color(1, 1, 1, 0))
             {
-                RotateZ(differenceVector.x);
+                if (isObjective)
+                {
+                    stageGameObject.GetComponent<StageController>().ObjectiveCount -= 1;
+                    CameraShaker.instance.ShakeVertical();
+                }
+                Destroy(this.gameObject);
             }
             else
             {
-                RotateY(differenceVector.y);
+                GameManager.instance.GameOver = true;
             }
         }
     }
 
-    private void RotateZ(float x)
-    {
-        if (x < 0)
-        {
-            anim.SetTrigger("RotateZInc");
-
-        }
-        else
-        {
-            anim.SetTrigger("RotateZDec");
-        }
-    }
-    private void RotateY(float y)
-    {
-        if (y < 0)
-        {
-            anim.SetTrigger("RotateXDec");
-        }
-        else
-        {
-            anim.SetTrigger("RotateXInc");
-        }
-    }
-
-    IEnumerator DestoryAfterAnimation()
-    {
-        yield return new WaitForSeconds(1);
-        if (cubeColor == new Color(1, 1, 1, 0))
-        {
-            if (isObjective)
-            {
-                stageGameObject.GetComponent<StageController>().ObjectiveCount -= 1;
-            }
-            Destroy(this.gameObject);
-        }
-        else
-        {
-            GameManager.instance.GameOver = true;
-        }
-
-    }
 }

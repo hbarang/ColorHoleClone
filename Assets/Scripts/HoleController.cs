@@ -37,7 +37,6 @@ public class HoleController : MonoBehaviour
         }
         else
         {
-            GetComponent<Collider>().enabled = false;
             if (horizontalStageChanging)
             {
                 MoveHorizontally();
@@ -117,12 +116,11 @@ public class HoleController : MonoBehaviour
 
         if (Mathf.Abs(transform.position.z - objectivePosition.z) > 0.05f)
         {
-            transform.position = Vector3.Lerp(transform.position, objectivePosition, 1f / 1.5f * Time.deltaTime);
+            transform.position = Vector3.Lerp(transform.position, objectivePosition, 1f / 0.6f * Time.deltaTime);
         }
         else
         {
             stageChanging = false;
-            GetComponent<Collider>().enabled = true;
         }
     }
 
