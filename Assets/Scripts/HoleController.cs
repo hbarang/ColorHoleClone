@@ -63,9 +63,9 @@ public class HoleController : MonoBehaviour
         {
             transform.position = new Vector3(transform.position.x, transform.position.y, verticalMovementLimiter);
         }
-        if (transform.position.z > verticalMovementLimiter + 8.5f)
+        if (transform.position.z > verticalMovementLimiter + 8f)
         {
-            transform.position = new Vector3(transform.position.x, transform.position.y, verticalMovementLimiter + 8.5f);
+            transform.position = new Vector3(transform.position.x, transform.position.y, verticalMovementLimiter + 8f);
         }
     }
 
