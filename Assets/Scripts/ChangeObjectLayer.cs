@@ -19,7 +19,7 @@ public class ChangeObjectLayer : MonoBehaviour
 
         }
 
-        if (other.gameObject.tag == "InterStageObjects")
+        if (other.gameObject.tag == Tags.InterStageObjects)
         {
             other.gameObject.layer = LayerOnEnter;
 
@@ -34,7 +34,7 @@ public class ChangeObjectLayer : MonoBehaviour
 
         }
 
-        if (other.gameObject.tag == "InterStageObjects")
+        if (other.gameObject.tag == Tags.InterStageObjects)
         {
             other.gameObject.layer = LayerOnEnter;
 

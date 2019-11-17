@@ -17,7 +17,6 @@ public class GateController : MonoBehaviour
     }
     void OpenTheGate(int stage)
     {
-        Debug.Log("Stage");
         if (stage == 2)
         {
             StartCoroutine(MoveVertically(2f));
@@ -30,7 +29,7 @@ public class GateController : MonoBehaviour
 
         while (elapsed < duration)
         {
-            if (transform.gameObject.tag == "SecondGate")
+            if (transform.gameObject.tag == Tags.SecondGate)
             {
                 transform.localPosition = Vector3.MoveTowards(transform.localPosition, new Vector3(originalPosition.x, 0.5f, originalPosition.z), duration);
             }
