@@ -8,11 +8,13 @@ public class CameraController : MonoBehaviour
     int stage;
     bool stageChanging = false;
     Vector3 originalPosition;
+    private float verticalChangeTime;
     // Start is called before the first frame update
     void Start()
     {
         originalPosition = transform.position;
         Hole.GetComponent<HoleController>().VerticalStageChangeEvent += ChangeStageState;
+        verticalChangeTime = Hole.GetComponent<HoleController>().verticalStageChangeTime;
         GameManager.instance.StageChangedEvent += StageCounter;
         GameManager.instance.GameOverEvent += GameOver;
         GameManager.instance.LevelChangedEvent += ChangeLevel;
@@ -40,7 +42,7 @@ public class CameraController : MonoBehaviour
         Vector3 objectivePosition = new Vector3(transform.position.x, transform.position.y, (-6 + (stage - 1) * 20));
         if (Mathf.Abs(transform.position.z - objectivePosition.z) > 0.05f)
         {
-            transform.position = Vector3.Lerp(transform.position, objectivePosition, 1f / 0.6f * Time.deltaTime);
+            transform.position = Vector3.Lerp(transform.position, objectivePosition, 1f / verticalChangeTime * Time.deltaTime);
         }
         else
         {
@@ -54,6 +56,13 @@ public class CameraController : MonoBehaviour
     void ChangeLevel(int level)
     {
         GameOver();
+    }
+
+    private void OnDestroy()
+    {
+        GameManager.instance.StageChangedEvent -= StageCounter;
+        GameManager.instance.GameOverEvent -= GameOver;
+        GameManager.instance.LevelChangedEvent -= ChangeLevel;
     }
 
 }

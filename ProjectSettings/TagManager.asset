@@ -8,6 +8,8 @@ TagManager:
   - Level
   - FakePlane
   - ObjectKiller
+  - InterStageObjects
+  - SecondGate
   layers:
   - Default
   - TransparentFX

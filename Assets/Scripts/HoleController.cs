@@ -7,9 +7,11 @@ public class HoleController : MonoBehaviour
     public float maxHorizontalSpeed;
     public float maxVerticalSpeed;
     public float speedMultiplier;
+    [HideInInspector]
     public bool stageChanging = false;
     private bool horizontalStageChanging = false;
     int currentStage = 1;
+    public float verticalStageChangeTime = 0.8f;
 
     private Vector3 originalPosition;
     private float originalVerticalMovementLimiter;
@@ -19,13 +21,12 @@ public class HoleController : MonoBehaviour
     public event OnVerticalStageChange VerticalStageChangeEvent;
 
 
-
     private void Start()
     {
         GameManager.instance.StageChangedEvent += StageChanged;
         GameManager.instance.LevelChangedEvent += LevelChanged;
         GameManager.instance.GameOverEvent += GameOver;
-
+        
         originalVerticalMovementLimiter = verticalMovementLimiter;
         originalPosition = transform.position;
     }
@@ -62,9 +63,9 @@ public class HoleController : MonoBehaviour
         {
             transform.position = new Vector3(transform.position.x, transform.position.y, verticalMovementLimiter);
         }
-        if (transform.position.z > verticalMovementLimiter + 9)
+        if (transform.position.z > verticalMovementLimiter + 8.5f)
         {
-            transform.position = new Vector3(transform.position.x, transform.position.y, verticalMovementLimiter + 9);
+            transform.position = new Vector3(transform.position.x, transform.position.y, verticalMovementLimiter + 8.5f);
         }
     }
 
@@ -116,7 +117,7 @@ public class HoleController : MonoBehaviour
 
         if (Mathf.Abs(transform.position.z - objectivePosition.z) > 0.05f)
         {
-            transform.position = Vector3.Lerp(transform.position, objectivePosition, 1f / 0.6f * Time.deltaTime);
+            transform.position = Vector3.Lerp(transform.position, objectivePosition, 1f / verticalStageChangeTime * Time.deltaTime);
         }
         else
         {

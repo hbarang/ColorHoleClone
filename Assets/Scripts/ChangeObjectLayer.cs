@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class ChangeBallLayer : MonoBehaviour
+public class ChangeObjectLayer : MonoBehaviour
 {
 
     public int LayerOnEnter; // BallInHole
@@ -16,6 +16,13 @@ public class ChangeBallLayer : MonoBehaviour
         if (other.gameObject.tag == Tags.Player && !holeController.stageChanging)
         {
             other.gameObject.layer = LayerOnEnter;
+
+        }
+
+        if (other.gameObject.tag == "InterStageObjects")
+        {
+            other.gameObject.layer = LayerOnEnter;
+
         }
     }
 
@@ -24,6 +31,13 @@ public class ChangeBallLayer : MonoBehaviour
         if (other.gameObject.tag == Tags.Player && !holeController.stageChanging)
         {
             other.gameObject.layer = LayerOnExit;
+
+        }
+
+        if (other.gameObject.tag == "InterStageObjects")
+        {
+            other.gameObject.layer = LayerOnEnter;
+
         }
     }
 }
